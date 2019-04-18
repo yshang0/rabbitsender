@@ -1,23 +1,31 @@
+require 'sinatra'
 require 'bunny'
 
-connection = Bunny.new ENV['CLOUDAMQP_URL']
-connection.start
+# connection = Bunny.new ENV['CLOUDAMQP_URL']
 
-channel = connection.create_channel
+connection = Bunny.new(host:  'localhost',
+                  port:  '5672',
+                  vhost: '/',
+                  user:  'guest',
+                  pass:  'guest')
 
-queue = channel.queue('hello')
+get '/' do
+	erb :main
+end
 
-channel.default_exchange.publish('Hello World', routing_key: queue.name)
-puts " [x] Sent 'Hello World!'"
+post '/sender'  do
+	connection.start
 
-connection.close
+	channel = connection.create_channel
 
+	queue = channel.queue('hello')
 
-# ENV['CLOUDAMQP_URL']
+	channel.default_exchange.publish('Hello World', routing_key: queue.name)
+	puts " [x] Sent 'Hello World!'"
 
+	connection.close
 
-# (host:  'localhost',
-#                   port:  '5672',
-#                   vhost: '/',
-#                   user:  'guest',
-#                   pass:  'guest')
+	redirect '/'
+	
+end
+
