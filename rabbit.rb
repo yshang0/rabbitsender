@@ -1,13 +1,13 @@
 require 'sinatra'
 require 'bunny'
 
-# connection = Bunny.new ENV['CLOUDAMQP_URL']
+connection = Bunny.new ENV['CLOUDAMQP_URL']
 
-connection = Bunny.new(host:  'localhost',
-                  port:  '5672',
-                  vhost: '/',
-                  user:  'guest',
-                  pass:  'guest')
+# connection = Bunny.new(host:  'localhost',
+#                   port:  '5672',
+#                   vhost: '/',
+#                   user:  'guest',
+#                   pass:  'guest')
 
 get '/' do
 	erb :main
