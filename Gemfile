@@ -21,6 +21,9 @@ gem 'sinatra-flash'
 gem 'simplecov'
 gem 'thin'
 gem 'bunny'
+gem 'sinatra'
+gem 'haml'
+gem 'amqp'
 
 group :development do
   gem 'pry-byebug'
